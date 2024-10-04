@@ -2,7 +2,7 @@
 FROM node:18-alpine
 
 # Specify working directory
-WORKDIR /src
+WORKDIR /
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
@@ -14,7 +14,7 @@ RUN npm -f install
 COPY . .
 
 # Expose port 8000
-EXPOSE 8000
+EXPOSE 9229
 
 # Run the app
 CMD ["npm", "start"]

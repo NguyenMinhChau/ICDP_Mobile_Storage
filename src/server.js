@@ -6,7 +6,7 @@ const path = require('path');
 const morgan = require('morgan');
 const router = require('./Routers');
 const db = require('./utils/connectDB');
-const PORT = 8000;
+const PORT = 9229;
 const app = express();
 
 db.connect();
