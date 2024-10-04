@@ -5,11 +5,30 @@ const cors = require('cors');
 const path = require('path');
 const morgan = require('morgan');
 const router = require('./Routers');
-const db = require('./utils/connectDB');
+// const db = require('./utils/connectDB');
+const mongoose = require('mongoose');
 const port = process.env.PORT || 8000;
 const app = express();
 
-db.connect();
+// db.connect();
+
+const connect = async () => {
+	try {
+		const urlDb =
+			process.env.TYPE === 'DEV'
+				? process.env.MONGO_URI_COMPASS
+				: process.env.MONGO_URI_CLOUD;
+		await mongoose.connect(urlDb, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+		});
+		console.log(`MongoDB Connected Successfully`);
+	} catch (err) {
+		console.log(`MongoDB Connection Failed`);
+	}
+};
+
+connect();
 
 app.use(cookieParser());
 app.use(express.json());
