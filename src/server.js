@@ -28,7 +28,7 @@ const connect = async () => {
 connect();
 
 app.use(cookieParser());
-app.use(express.json());
+app.use(express.json({ limit: 'Infinity' }));
 app.use(
 	cors({
 		origin: '*',
@@ -39,6 +39,7 @@ app.use(
 );
 app.use(
 	express.urlencoded({
+		limit: 'Infinity',
 		extended: true,
 	}),
 );
