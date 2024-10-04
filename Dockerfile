@@ -2,13 +2,13 @@
 FROM node:18-alpine
 
 # Specify working directory
-WORKDIR /app
+WORKDIR /src
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm -f install
 
 # Copy source code
 COPY . .
