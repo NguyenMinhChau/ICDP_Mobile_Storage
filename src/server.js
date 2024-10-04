@@ -5,7 +5,7 @@ const cors = require('cors');
 const path = require('path');
 const morgan = require('morgan');
 const router = require('./Routers');
-const db = require('./utils');
+const db = require('./utils/connectDB');
 const port = 8000;
 const app = express();
 
