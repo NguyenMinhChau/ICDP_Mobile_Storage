@@ -11,7 +11,7 @@ const avatarController = {
 			const { password: _, ...data } = _avatar._doc;
 			res.status(200).json({
 				message: 'Get avatar success!',
-				user: data,
+				avatar: data,
 			});
 		} catch (err) {
 			return res.status(500).json({ message: err.message });
@@ -32,13 +32,13 @@ const avatarController = {
 				if (page < 1) {
 					page = 1;
 				}
-				const users = await Avatar.find()
+				const avatars = await Avatar.find()
 					.skip((page - 1) * limit)
 					.limit(limit);
 				const totalData = await Avatar.countDocuments();
 				res.status(200).json({
 					message: 'Get all avatars success!',
-					users,
+					avatars,
 					total: totalData,
 				});
 			}
@@ -63,12 +63,12 @@ const avatarController = {
 	},
 	deleteAvatar: async (req, res) => {
 		try {
-			const user = await Avatar.findOneAndDelete({
+			const avatar = await Avatar.findOneAndDelete({
 				email: req.params.email,
 			});
 			res.status(200).json({
 				message: 'Delete avatar success!',
-				user,
+				avatar,
 			});
 		} catch (err) {
 			return res.status(500).json({ message: err.message });
@@ -76,12 +76,30 @@ const avatarController = {
 	},
 	createAvatar: async (req, res) => {
 		try {
-			const avatar = new Avatar(req.body);
-			await avatar.save();
-			res.status(201).json({
-				message: 'Create avatar success!',
-				avatar,
+			// Kiểm tra xem email đã tồn tại chưa
+			const existingAvatar = await Avatar.findOne({
+				email: req.body.email,
 			});
+
+			if (existingAvatar) {
+				// Nếu đã tồn tại, cập nhật avatar
+				existingAvatar.set(req.body); // Cập nhật các trường cần thiết
+				await existingAvatar.save();
+
+				return res.status(200).json({
+					message: 'Avatar updated successfully!',
+					avatar: existingAvatar,
+				});
+			} else {
+				// Nếu không tồn tại, tạo mới
+				const avatar = new Avatar(req.body);
+				await avatar.save();
+
+				return res.status(201).json({
+					message: 'Avatar created successfully!',
+					avatar,
+				});
+			}
 		} catch (err) {
 			return res.status(500).json({ message: err.message });
 		}
