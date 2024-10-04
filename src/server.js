@@ -6,7 +6,7 @@ const path = require('path');
 const morgan = require('morgan');
 const router = require('./Routers');
 const db = require('./utils/connectDB');
-const PORT = 9229;
+const port = 4000;
 const app = express();
 
 db.connect();
@@ -30,6 +30,6 @@ app.use(express.static(path.join(__dirname, '/uploads/')));
 //app.use(morgan('common'));
 router(app);
 
-app.listen(PORT, () => {
-	console.log(`Server running port ${PORT}`);
+app.listen(port, () => {
+	console.log(`Server running port ${port}`);
 });

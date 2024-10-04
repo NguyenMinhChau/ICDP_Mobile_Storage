@@ -8,13 +8,13 @@ WORKDIR /
 COPY package*.json ./
 
 # Install dependencies
-RUN npm -f install
+RUN npm install
 
 # Copy source code
 COPY . .
 
 # Expose port 8000
-EXPOSE 9229
+EXPOSE 8000
 
 # Run the app
 CMD ["npm", "start"]
