@@ -5,12 +5,9 @@ const cors = require('cors');
 const path = require('path');
 const morgan = require('morgan');
 const router = require('./Routers');
-// const db = require('./utils/connectDB');
 const mongoose = require('mongoose');
 const port = process.env.PORT || 8000;
 const app = express();
-
-// db.connect();
 
 const connect = async () => {
 	try {
@@ -34,10 +31,10 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(
 	cors({
-		origin: true,
-		credentials: true,
-		optionSuccessStatus: 200,
-		methods: ['GET', 'POST', 'PUT', 'DELETE'],
+		origin: '*',
+		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+		allowedHeaders:
+			'Origin,X-Requested-With,Content-Type,Accept,Authorization,Accept-Language',
 	}),
 );
 app.use(

@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const userModel = new Schema(
+const avatarModel = new Schema(
 	{
-		username: {
+		uri_base64: {
 			type: String,
-			required: true,
+			default: '',
 		},
 		email: {
 			type: String,
@@ -17,4 +17,4 @@ const userModel = new Schema(
 		timestamps: true,
 	},
 );
-module.exports = mongoose.model('User', userModel);
+module.exports = mongoose.model('Avatar', avatarModel);
